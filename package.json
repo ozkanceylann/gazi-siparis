@@ -1,0 +1,1 @@
+{"name":"gazi-siparis-plpgsql","version":"1.0.0","private":true,"scripts":{"test":"node tests/database.cjs && node tests/ui.cjs && python -m unittest discover -s tests -p 'test_*.py'","check":"node --check web/app.js && node --check web/print.js && python -m compileall -q app"},"devDependencies":{"@electric-sql/pglite":"0.3.10","linkedom":"0.18.12"}}
