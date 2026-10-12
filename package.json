@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "node tests/database.cjs && node tests/ui.cjs && node tests/hosted_transport.cjs && python -m unittest discover -s tests -p 'test_*.py'",
+    "test": "node tests/database.cjs && node tests/live_database.cjs && node tests/ui.cjs && node tests/hosted_transport.cjs && python -m unittest discover -s tests -p 'test_*.py'",
     "check": "node --check web/app.js && node --check web/print.js && python -m compileall -q app"
   },
   "devDependencies": {

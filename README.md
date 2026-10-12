@@ -2,15 +2,19 @@
 
 Gazi ana panelinin sekmeleri, tabloları ve detay ekranları esas alınarak yazılan yeni sistem. Görünüm kaynağı `ozkanceylann/gazi`; mobil `siparis-takip` tasarımı kullanılmadı. Sipariş ve kargo iş kuralları sıfırdan `database/001_install.sql` içindeki PL/pgSQL fonksiyonlarında çalışır. Tarayıcı tabloları doğrudan değiştirmez.
 
-**Mevcut Gazi reposu, canlı sipariş tabloları ve iş akışları korunur. Çalışan test sürümü ayrı gazi_ops şemasını kullanır.**
-
-## Çalışan test paneli
+## Canlı panel
 
 https://gazi-plpgsql-panel.brainyfrog33.chatgpt.site
 
-Panel yalnızca sahibine açık yayımlandı. Aynı ChatGPT hesabınızla açın; ayrıca telefon/şifre girişi gerekmez. 15 test siparişi ayrı `gazi_ops` şemasında durur. Hazırlama, kargolama, etiket, takip, iptal ve geri alma gerçek PostgreSQL işlemleridir; taşıyıcı cevapları **simülasyondur**. Gerçek DHL gönderisi açılmaz. Otomatik worker aktif; takip aralığı 30 dakikadır.
+Aynı ChatGPT hesabınızla açın. Panel sahibine özel erişimle çalışır. Canlı `gazi_live` şemasında 2.480 gerçek sipariş ve 4.415.999 TL kaynak toplamı doğrulandı. 15 simülasyon siparişi ayrı `gazi_ops` şemasında kalır.
 
-Hosted sürüm Sites Worker → doğrulanmış gizli servis anahtarı → Supabase Edge Function → PL/pgSQL kullanır. Sır tarayıcıya/GitHub'a gönderilmez. ChatGPT Sites sahibine özel erişim, bu test ortamının yetki sınırıdır; siteyi çok kullanıcılı/public yapmak için ayrıca kullanıcı eşleştirme uygulanmalıdır. Docker dağıtımında mevcut telefon/şifre ve satıcı modeli devam eder.
+Sipariş ekleme, düzenleme, hazırlama ve mevcut DHL kargolarının gerçek hareket takibi kullanılabilir. Kaynak `public.gazi_siparisler` ile PL/pgSQL tetikleyicileri üzerinden çift yönlü senkronizasyon vardır. Yeni siparişler ortak `tum_siparisler` sipariş numarası ile açılır. Eski repo korunur.
+
+**Gerçek DHL gönderisi oluşturma, yeni barkod/etiket kesme ve taşıyıcıda iptal yetkileri kapalıdır.** Bu işlemler için açık onay bekleniyor; hem arayüz hem servis ve gateway engelleri uygulanır. Mevcut kaydedilmiş etiketler okunabilir. Otomatik takip 30 dakika aralıklıdır. DHL hesap bağlantısı ve gerçek bir kargonun altı hareketinin kaydı doğrulandı.
+
+Hosted sürüm Sites Worker → gizli servis anahtarı → Supabase Edge Function → PL/pgSQL kullanır. Anahtarlar tarayıcıya veya GitHub'a gönderilmez. Canlı geçiş SQL dosyaları `010`–`014`, runtime `gazi-live-runtime`, n8n gateway `n8n/live-gateway.sdk.ts` içindedir. Gateway kişisel Özkan CEYLAN n8n projesinde `GAZI_PLPGSQL_CANLI_GATEWAY` adıyla çalışır ve taşıyıcı sorgularını sınırlar.
+
+Aşağıdaki Docker kurulumu bağımsız veritabanı/test kurulumu içindir; barındırılan canlı panel farklı `gazi_live` bağlantısını kullanır.
 
 ## Kurulum
 
