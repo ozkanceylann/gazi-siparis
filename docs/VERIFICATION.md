@@ -16,3 +16,5 @@ Sınırlar: Tarayıcıda piksel/screenshot ve yazıcı testi yapılmadı. Docker
 ## Çalışan hosted sürüm
 
 Owner-private test paneli yayımlandı. Ayrı gazi_ops şemasında 15 sipariş (16.500 TL sentetik toplam), şehir/ilçe referansları ve worker kuyruğu çalışıyor. Hosted HTTP → Edge → PostgreSQL zincirinde me/list/prepare/cargo/label/track/cancel/restore/report çağrıları başarılı. Denenen sipariş tekrar Bekliyor durumuna alındı; toplam 15 kayıt korunuyor. pg_cron tetiklemesi başarılı ve Edge worker HTTP 200 döndürüyor. Worker HMAC CSRF/owner identity testleri de başarılı. Piksel, yazıcı ve gerçek DHL doğrulaması yapılmadı.
+
+Yayımlanan Sites adresinde ana HTML, app.js ve /api/me HTTP 200 olarak doğrulandı. Hosted transport Cloudflare uyumluluğu ve platform kimlik başlıkları için düzeltildi. API, Sites sahibine özel platform erişimiyle korunur.

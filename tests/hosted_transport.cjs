@@ -6,6 +6,6 @@ global.fetch=async()=>{upstream++;return new Response(JSON.stringify({id:1,name:
 assert.equal((await worker.fetch(new Request('https://site.test/api/me'),env,{})).status,401);
 const me=await worker.fetch(new Request('https://site.test/api/me',{headers:{'oai-authenticated-user-id':'owner'}}),env,{});const u=await me.json();assert.ok(u.csrf);
 const wrong=await worker.fetch(new Request('https://site.test/api/rpc',{method:'POST',headers:{'oai-authenticated-user-id':'owner',origin:'https://site.test','X-CSRF-Token':'bad'},body:'{}'}),env,{});assert.equal(wrong.status,403);
-const ok=await worker.fetch(new Request('https://site.test/api/rpc',{method:'POST',headers:{'oai-authenticated-user-id':'owner',origin:'https://site.test','X-CSRF-Token':u.csrf},body:'{"operation":"list"}'}),env,{});assert.equal(ok.status,200);assert.equal(upstream,2);global.fetch=realFetch;
+const ok=await worker.fetch(new Request('https://site.test/api/rpc',{method:'POST',headers:{'oai-authenticated-user-id':'owner',origin:'https://site.test','X-CSRF-Token':u.csrf},body:'{"operation":"list"}'}),env,{});assert.equal(ok.status,200);assert.equal(upstream,2);const fallback=await worker.fetch(new Request('https://site.test/api/me',{headers:{'oai-authenticated-user-email':'verified-owner@example.invalid'}}),env,{});assert.equal(fallback.status,200);global.fetch=realFetch;
 console.log('PASS: hosted owner identity, CSRF, server-only proxy credentials');
 })().catch(e=>{console.error(e);process.exit(1)});
