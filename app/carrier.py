@@ -91,7 +91,7 @@ def sandbox(job,o,s,l):
 def process(job,o,s,l):
  if job['kind']=='codes':
   from app.db import connect
-  with connect() as c:r=c.execute('SELECT c.code AS city_code,d.code AS district_code FROM cities c JOIN districts d ON d.city_code=c.code WHERE lower(c.name)=lower(%s) AND lower(d.name)=lower(%s)',(o['sehir'],o['ilce'])).fetchone()
+  with connect() as c:r=c.execute("SELECT c.code AS city_code,d.code AS district_code FROM cities c JOIN districts d ON d.city_code=c.code WHERE lower(translate(c.name,'İIÇĞÖŞÜ','iıçğöşü'))=lower(translate(%s,'İIÇĞÖŞÜ','iıçğöşü')) AND lower(translate(d.name,'İIÇĞÖŞÜ','iıçğöşü'))=lower(translate(%s,'İIÇĞÖŞÜ','iıçğöşü'))",(o['sehir'],o['ilce'])).fetchone()
   if not r:raise CarrierError('İl/ilçe listesi bulunamadı; doğrulanmış DHL kodlarını içe aktarın')
   return r
  if job['kind']=='reaction':

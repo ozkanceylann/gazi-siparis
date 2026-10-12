@@ -10,6 +10,6 @@ print(f'{len(cities)} şehir ve {len(districts)} ilçe doğrulandı.')
 if a.apply:
  with connect() as c:
   for x in cities:c.execute('INSERT INTO cities VALUES(%s,%s) ON CONFLICT(code) DO UPDATE SET name=excluded.name',(int(x['code']),x['name'].strip()))
-  for x in districts:c.execute('INSERT INTO districts VALUES(%s,%s,%s) ON CONFLICT(code) DO UPDATE SET city_code=excluded.city_code,name=excluded.name',(int(x['code']),int(x['city_code']),x['name'].strip()))
+  for x in districts:c.execute('INSERT INTO districts VALUES(%s,%s,%s) ON CONFLICT(city_code,code) DO UPDATE SET name=excluded.name',(int(x['code']),int(x['city_code']),x['name'].strip()))
  print('Yeni veritabanına yüklendi.')
 else:print('Ön kontrol tamamlandı; kayıt yazılmadı. Yüklemek için --apply kullanın.')

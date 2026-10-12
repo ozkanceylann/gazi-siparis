@@ -2,7 +2,15 @@
 
 Gazi ana panelinin sekmeleri, tabloları ve detay ekranları esas alınarak yazılan yeni sistem. Görünüm kaynağı `ozkanceylann/gazi`; mobil `siparis-takip` tasarımı kullanılmadı. Sipariş ve kargo iş kuralları sıfırdan `database/001_install.sql` içindeki PL/pgSQL fonksiyonlarında çalışır. Tarayıcı tabloları doğrudan değiştirmez.
 
-**Bu repo yeni kurulum içindir. Mevcut Gazi reposu, canlı veritabanı ve iş akışları değiştirilmedi. Repo yüklemesi sunucu kurulumu veya canlıya geçiş anlamına gelmez.**
+**Mevcut Gazi reposu, canlı sipariş tabloları ve iş akışları korunur. Çalışan test sürümü ayrı gazi_ops şemasını kullanır.**
+
+## Çalışan test paneli
+
+https://gazi-plpgsql-panel.brainyfrog33.chatgpt.site
+
+Panel yalnızca sahibine açık yayımlandı. Aynı ChatGPT hesabınızla açın; ayrıca telefon/şifre girişi gerekmez. 15 test siparişi ayrı `gazi_ops` şemasında durur. Hazırlama, kargolama, etiket, takip, iptal ve geri alma gerçek PostgreSQL işlemleridir; taşıyıcı cevapları **simülasyondur**. Gerçek DHL gönderisi açılmaz. Otomatik worker aktif; takip aralığı 30 dakikadır.
+
+Hosted sürüm Sites Worker → doğrulanmış gizli servis anahtarı → Supabase Edge Function → PL/pgSQL kullanır. Sır tarayıcıya/GitHub'a gönderilmez. ChatGPT Sites sahibine özel erişim, bu test ortamının yetki sınırıdır; siteyi çok kullanıcılı/public yapmak için ayrıca kullanıcı eşleştirme uygulanmalıdır. Docker dağıtımında mevcut telefon/şifre ve satıcı modeli devam eder.
 
 ## Kurulum
 
@@ -73,4 +81,4 @@ npm test
 npm run check
 ```
 
-Gerçek PL/pgSQL, PGlite/PostgreSQL üzerinde çalıştırılır. UI DOM testleri ve Python taşıyıcı/API güvenlik testleri bulunur. Sonuçlar ve doğrulama sınırları: [docs/VERIFICATION.md](docs/VERIFICATION.md). Gerçek DHL hesabında yeni gönderi testi ve sunucuda Docker kurulumu bu teslimatta yapılmadı.
+Gerçek PL/pgSQL, PGlite/PostgreSQL üzerinde çalıştırılır. UI DOM testleri ve Python taşıyıcı/API güvenlik testleri bulunur. Sonuçlar ve doğrulama sınırları: [docs/VERIFICATION.md](docs/VERIFICATION.md). Hosted PostgreSQL üzerinde hazırlama/kargolama/etiket/takip/iptal/geri alma/rapor zinciri doğrulandı. Gerçek DHL hesabında gönderi açılmadı; Docker ortamı başlatılmadı.

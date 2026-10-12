@@ -12,3 +12,7 @@
 - 14 Python testi: sandbox istek eşlemeleri ve mevcut gönderi kurtarma; başarısız sorguda yeni gönderi açmama; kaydedilmiş referans; olay sıralama; ortam ayrımı; COD; şifre; origin/CSRF; oturumsuz erişim; actor enjeksiyonu; kapalı ingest; statik güvenlik başlıkları.
 
 Sınırlar: Tarayıcıda piksel/screenshot ve yazıcı testi yapılmadı. Docker ortamı başlatılmadı. Gerçek DHL hesabında yeni sandbox gönderisi bu teslimatta açılmadı. Cevap taklitleri ve mock kargolar gerçek DHL gönderisi olarak sunulmaz. Canlı veri aktarımı ve yayına geçiş yapılmadı.
+
+## Çalışan hosted sürüm
+
+Owner-private test paneli yayımlandı. Ayrı gazi_ops şemasında 15 sipariş (16.500 TL sentetik toplam), şehir/ilçe referansları ve worker kuyruğu çalışıyor. Hosted HTTP → Edge → PostgreSQL zincirinde me/list/prepare/cargo/label/track/cancel/restore/report çağrıları başarılı. Denenen sipariş tekrar Bekliyor durumuna alındı; toplam 15 kayıt korunuyor. pg_cron tetiklemesi başarılı ve Edge worker HTTP 200 döndürüyor. Worker HMAC CSRF/owner identity testleri de başarılı. Piksel, yazıcı ve gerçek DHL doğrulaması yapılmadı.
