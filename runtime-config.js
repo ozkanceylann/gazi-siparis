@@ -1,0 +1,1 @@
+window.GAZI_HOSTED=true;
